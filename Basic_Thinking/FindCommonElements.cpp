@@ -4,26 +4,98 @@
 */
 
 #include <iostream>
+#include <algorithm>
+#include <set>
 
 using namespace std;
 
 
 // Method 1 : It is a brute force method where we compare
 // each element of array 1 with each element of array 2
+// Complexity = O(m * n)
 int bruteForceMethod (int *p1, int *p2, int len1, int len2)
 {
 	int numCommon = 0;
 
 	for (int i=0; i<len1; ++i)
-	{
 		for (int j=0; j<len2; ++j)
-		{
 			if (p1[i] == p2[j])
 				numCommon++;
+
+	return numCommon;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+// Mehtod 2 : Sort both arrays and move pointers as per comparison
+// Complexity = O(mlogm + nlogn + m+n)
+int sortBothAndFind (int *p1, int *p2, int len1, int len2)
+{
+	sort(p1, p1+len1);
+	sort(p2, p2+len2);
+
+	int i = 0, j = 0, numCommon = 0;
+
+	// Since arrays are sorted, if one element is greater than others,
+	// than greater one is not likely to match with anyone else
+	while (i < len1 && j < len2)
+	{
+		if ( p1[i] > p2[j])
+			j++;
+		else if (p1[i] < p2[j])
+			i++;
+		else
+		{
+			numCommon++;
+			i++; j++;
 		}
 	}
 	return numCommon;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+// Method 3: Sort only one array and apply binary search for each element of 2nd array
+// Complexity = O(mlogm + nlogn)
+int sortOneAndBSearch (int *p1, int *p2, int len1, int len2)
+{
+	sort (p1, p1+len1);
+
+	int numCommon = 0;
+
+	// Now, apply binary search for each element of p2
+	for (int j=0; j<len2; j++)
+	{
+		if (binary_search(p1, p1+len1, p2[j]))
+			++numCommon;
+	}
+	return numCommon;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+// Method 4 : Store elements of one array in a set and then, find if elements of
+// other array are already in set or not
+// Since, C++ set's give faster find, we can use them
+// Maps can also be used
+// Complexity = O(mlogm), Space = O(n)
+int findInASet (int *p1, int *p2, int len1, int len2)
+{
+	int numCommon = 0;
+
+	set<int> mySet;
+	for (int i=0; i<len1; ++i)
+		mySet.insert(p1[i]);
+
+	for (int j=0; j<len2; ++j)
+	{
+		if (mySet.find(p2[j]) != mySet.end())
+			numCommon++;
+	}
+	return numCommon;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char const *argv[])
 {
@@ -44,10 +116,16 @@ int main(int argc, char const *argv[])
 
 
 	// Pass the arrays to function which returns number of common elements present
-	int common = bruteForceMethod (a1, a2, size1, size2);
+	//int common = bruteForceMethod (a1, a2, size1, size2);
+
+	//int common = sortBothAndFind (a1, a2, size1, size2);
+
+	//int common = sortOneAndBSearch (a1, a2, size1, size2);
+
+	int common = findInASet (a1, a2, size1, size2);
 
 	cout<<"The number of common elements is : "<<common<<endl;
-
+	
 	return 0;
 }
 
