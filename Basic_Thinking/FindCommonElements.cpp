@@ -6,6 +6,7 @@
 #include <iostream>
 #include <algorithm>
 #include <set>
+#include <cstdlib>
 
 using namespace std;
 
@@ -104,16 +105,33 @@ int main(int argc, char const *argv[])
 	int size1, size2;
 	cin>>size1>>size2;
 
+   // srand(time(NULL));
 
 	// Initialize two arrays and array elements as inputs from user
 	int a1[size1], a2[size2];
 	cout<<"=== Enter elements of two arrays ==="<<endl;
+
+	// To properly test the alogirhtm, arrays should be taken random
+	// But, as this would contain duplicates. So, we currently take input from user only
 	for (int i=0; i<size1; i++)
-		cin>>a1[i];
+        cin>>a1[i];
+    for (int i=0; i<size2; i++)
+        cin>>a2[i];
+
+/*
+	for (int i=0; i<size1; i++)
+		a1[i] = rand()%10 + 1;
 
 	for (int i=0; i<size2; i++)
-		cin>>a2[i];
+		a2[i] = rand()%10 + 1;
 
+    // Display the filled random arrays
+    for (int i=0; i<size1; i++)
+        cout<<a1[i]<<" ";
+    cout<<endl;
+    for (int i=0; i<size2; i++)
+        cout<<a2[i]<<" ";
+*/
 
 	// Pass the arrays to function which returns number of common elements present
 	//int common = bruteForceMethod (a1, a2, size1, size2);
@@ -125,7 +143,7 @@ int main(int argc, char const *argv[])
 	int common = findInASet (a1, a2, size1, size2);
 
 	cout<<"The number of common elements is : "<<common<<endl;
-	
+
 	return 0;
 }
 
