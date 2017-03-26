@@ -14,7 +14,7 @@ using namespace std;
 // Method 1 : It is a brute force method where we compare
 // each element of array 1 with each element of array 2
 // Complexity = O(m * n)
-int bruteForceMethod (int *p1, int *p2, int len1, int len2)
+int bruteForceMethod1 (int *p1, int *p2, int len1, int len2)
 {
 	int numCommon = 0;
 
@@ -30,7 +30,7 @@ int bruteForceMethod (int *p1, int *p2, int len1, int len2)
 
 // Mehtod 2 : Sort both arrays and move pointers as per comparison
 // Complexity = O(mlogm + nlogn + m+n)
-int sortBothAndFind (int *p1, int *p2, int len1, int len2)
+int sortBothAndFind2 (int *p1, int *p2, int len1, int len2)
 {
 	sort(p1, p1+len1);
 	sort(p2, p2+len2);
@@ -58,7 +58,7 @@ int sortBothAndFind (int *p1, int *p2, int len1, int len2)
 
 // Method 3: Sort only one array and apply binary search for each element of 2nd array
 // Complexity = O(mlogm + nlogn)
-int sortOneAndBSearch (int *p1, int *p2, int len1, int len2)
+int sortOneAndBSearch3 (int *p1, int *p2, int len1, int len2)
 {
 	sort (p1, p1+len1);
 
@@ -80,7 +80,7 @@ int sortOneAndBSearch (int *p1, int *p2, int len1, int len2)
 // Since, C++ set's give faster find, we can use them
 // Maps can also be used
 // Complexity = O(mlogm), Space = O(n)
-int findInASet (int *p1, int *p2, int len1, int len2)
+int findInASet4 (int *p1, int *p2, int len1, int len2)
 {
 	int numCommon = 0;
 
@@ -134,13 +134,13 @@ int main(int argc, char const *argv[])
 */
 
 	// Pass the arrays to function which returns number of common elements present
-	//int common = bruteForceMethod (a1, a2, size1, size2);
+	//int common = bruteForceMethod1 (a1, a2, size1, size2);
 
-	//int common = sortBothAndFind (a1, a2, size1, size2);
+	//int common = sortBothAndFind2 (a1, a2, size1, size2);
 
-	//int common = sortOneAndBSearch (a1, a2, size1, size2);
+	//int common = sortOneAndBSearch3 (a1, a2, size1, size2);
 
-	int common = findInASet (a1, a2, size1, size2);
+	int common = findInASet4 (a1, a2, size1, size2);
 
 	cout<<"The number of common elements is : "<<common<<endl;
 
